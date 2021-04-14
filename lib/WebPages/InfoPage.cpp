@@ -27,6 +27,10 @@ void handleInfoPage()
       "<p><a href='http://%s/api/json'>http://%s/api/json</a> - HTTP_GET</p>",
       WiFi.localIP().toString().c_str(), WiFi.localIP().toString().c_str());
 
+  sendPrintf(
+      "<p><a href='http://%s/api/calibrate'>http://%s/api/calibrate</a> - Calibrate MQ2 sensor</p>",
+      WiFi.localIP().toString().c_str(), WiFi.localIP().toString().c_str());
+
   sendPrint("<p>&nbsp;</p>");
   sendPrint("<p><b>Plain text API</b> - Returns status in plain text format</p>");
 
