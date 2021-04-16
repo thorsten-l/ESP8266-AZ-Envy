@@ -50,6 +50,10 @@ const char *getJsonStatus(WiFiClient *client)
     strncpy(remoteAddress, server.client().remoteIP().toString().c_str(), 31);
   }
 
+  int wifi_rssi = WiFi.RSSI();
+  int wifi_signal = (wifi_rssi < -100) ? -100 : wifi_rssi;
+  wifi_signal = (wifi_signal > -50) ? 100 : 2 * (wifi_signal+100);
+
   sprintf(buffer,
           "{"
           "\"millis\":%lu,"
@@ -74,6 +78,8 @@ const char *getJsonStatus(WiFiClient *client)
           "\"wifi_ssid\":\"%s\","
           "\"wifi_reconnect_counter\":%d,"
           "\"wifi_channel\":%d,"
+          "\"wifi_rssi\":%d,"
+          "\"wifi_signal\":%d,"
           "\"wifi_phy_mode\":\"%s\","
           "\"wifi_mac_address\":\"%s\","
           "\"wifi_hostname\":\"%s\","
@@ -95,7 +101,8 @@ const char *getJsonStatus(WiFiClient *client)
           ARDUINO_BOARD, ESP.getChipId(), ESP.getCpuFreqMHz(), 
           ESP.getFlashChipRealSize(), ESP.getFlashChipSpeed(), 
           ESP.getFlashChipSize(), APP_NAME, APP_VERSION, __DATE__, __TIME__, 
-          appcfg.wifi_ssid, wifiHandler.getConnectCounter(), WiFi.channel(), 
+          appcfg.wifi_ssid, wifiHandler.getConnectCounter(), WiFi.channel(),
+          wifi_rssi, wifi_signal,
           wifiHandler.getPhyMode(), wifiHandler.getMacAddress(),
           WiFi.hostname().c_str(), WiFi.localIP().toString().c_str(), 
           WiFi.gatewayIP().toString().c_str(), 
