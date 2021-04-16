@@ -6,7 +6,7 @@ precompiled firmware from the [github releases](https://github.com/thorsten-l/ES
 
 ## Initial Firmware Upload via USB
 
-If you want to upload this Firmware for the very first time on your AZ-Envy Device you have to do it via USB.
+If you upload this Firmware for the very first time on your AZ-Envy Device you have to do it via USB.
 
 ### Flash-Mode for USB-Upload
 To upload a new Firmware via USB you have to put your AZ-Envy in `flash-mode`.
