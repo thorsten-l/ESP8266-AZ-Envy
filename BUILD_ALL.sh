@@ -10,8 +10,11 @@ done
 
 $COMMAND
 
+rm -fr "private/release"
+mkdir -p "private/release"
 for i in $PLATFORMS; do
   mkdir -p "private/build/$i"
   cp -v .pio/build/$i/firmware*.bin "private/build/$i"
+  cp -v .pio/build/$i/firmware-*.bin "private/release"
 done
 
