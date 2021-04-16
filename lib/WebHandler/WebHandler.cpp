@@ -307,7 +307,7 @@ void WebHandler::setup()
   {
     server.on("/captive.html", HTTP_GET, []() {
       server.send(200, "text/html", 
-        F("Please enter <b><a target='_blank' href='http://wifi.socket'>http://wifi.socket</a></b> or <b><a target='_blank' href='http://192.168.192.1'>http://192.168.192.1</a></b> into your browser."));
+        F("Please enter <b><a target='_blank' href='http://az-envy.local'>http://az-envy.local</a></b> or <b><a target='_blank' href='http://192.168.192.1'>http://192.168.192.1</a></b> into your browser."));
       server.client().stop();
     });
   }
@@ -315,7 +315,7 @@ void WebHandler::setup()
   server.onNotFound([]{
     if ( appcfg.wifi_mode == WIFI_AP )
     {
-      server.sendHeader( "Location", "http://wifi.socket/captive.html", true );
+      server.sendHeader( "Location", "http://az-envy.local/captive.html", true );
       server.send( 302, "text/plain", "");
       server.client().stop();
     }
