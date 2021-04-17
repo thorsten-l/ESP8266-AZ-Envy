@@ -3,6 +3,8 @@
 
 extern const char *getJsonStatus(WiFiClient *client);
 
+TelnetStreamClass TelnetStream(23);
+
 void TelnetStreamClass::printHelp()
 {
   TelnetStream.println("\n\nHELP page\n"
@@ -28,67 +30,73 @@ TelnetStreamClass::TelnetStreamClass(uint16_t port) : server(port)
 void TelnetStreamClass::begin()
 {
   isConnected = false;
-  server.begin();
-  client = server.available();
-  LOG0("Telnet server started...\n");
+  if (appcfg.telnet_enabled)
+  {
+    server.begin();
+    client = server.available();
+    LOG0("Telnet server started...\n");
+  }
 }
 
 void TelnetStreamClass::handle()
 {
-  if (initialized == false)
+  if (appcfg.telnet_enabled)
   {
-    begin();
-    initialized = true;
-  }
-
-  TelnetStream.available();
-
-  if (client && client.connected())
-  {
-    if (isConnected == false)
+    if (initialized == false)
     {
-      isConnected = true;
-      printBanner();
+      begin();
+      initialized = true;
     }
 
-    if (TelnetStream.available())
+    TelnetStream.available();
+
+    if (client && client.connected())
     {
-      int c = TelnetStream.read();
-
-      switch (c)
+      if (isConnected == false)
       {
-      case 'h':
-      case 'H':
-        printHelp();
-        break;
-
-      case 'b':
-      case 'B':
+        isConnected = true;
         printBanner();
-        break;
-
-      case 'j':
-      case 'J':
-        TelnetStream.println(getJsonStatus(&client));
-        break;
-
-      case 's':
-      case 'S':
-      {
-        // TelnetStream.printf( "\nTime      : %s\n", appDateTime() );
-        TelnetStream.printf("Uptime    : %s\n", appUptime());
-        TelnetStream.printf("Free Heap : %u\n", ESP.getFreeHeap());
-        TelnetStream.println();
       }
-      break;
 
-      case 'q':
-      case 'Q':
-      case 'e':
-      case 'E':
-        isConnected = false;
-        stop();
+      if (TelnetStream.available())
+      {
+        int c = TelnetStream.read();
+
+        switch (c)
+        {
+        case 'h':
+        case 'H':
+          printHelp();
+          break;
+
+        case 'b':
+        case 'B':
+          printBanner();
+          break;
+
+        case 'j':
+        case 'J':
+          TelnetStream.println(getJsonStatus(&client));
+          break;
+
+        case 's':
+        case 'S':
+        {
+          // TelnetStream.printf( "\nTime      : %s\n", appDateTime() );
+          TelnetStream.printf("Uptime    : %s\n", appUptime());
+          TelnetStream.printf("Free Heap : %u\n", ESP.getFreeHeap());
+          TelnetStream.println();
+        }
         break;
+
+        case 'q':
+        case 'Q':
+        case 'e':
+        case 'E':
+          isConnected = false;
+          stop();
+          break;
+        }
       }
     }
   }
@@ -158,20 +166,24 @@ void TelnetStreamClass::flush()
   client.flush();
 }
 
-TelnetStreamClass TelnetStream(23);
-
 void tlogPrintTimestamp()
 {
   time_t t = millis();
   Serial.printf("(%ld) ", t);
-  TelnetStream.printf("(%ld) ", t);
+  if (appcfg.telnet_enabled)
+  {
+    TelnetStream.printf("(%ld) ", t);
+  }
 }
 
 void tlog(const char *message)
 {
   tlogPrintTimestamp();
   Serial.print(message);
-  TelnetStream.print(message);
+  if (appcfg.telnet_enabled)
+  {
+    TelnetStream.print(message);
+  }
 }
 
 void tlog(String message)
@@ -185,7 +197,7 @@ void tlogf(const char *format, ...)
 {
   va_list argp;
   va_start(argp, format);
-  vsprintf( tlogBuffer, format, argp );
+  vsprintf(tlogBuffer, format, argp);
   va_end(argp);
-  tlog( tlogBuffer );
+  tlog(tlogBuffer);
 }

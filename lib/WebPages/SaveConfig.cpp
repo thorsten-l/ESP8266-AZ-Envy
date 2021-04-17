@@ -120,6 +120,9 @@ void storeConfigValue(const char *name, const char *value)
   paramInt(&appcfgWR.led_night_mode_timeout, A_led_night_mode_timeout, name, value);
 #endif
 
+  // Telnet
+  paramBool(&appcfgWR.telnet_enabled, A_telnet_enabled, name, value);
+
   // Hardware settings
   paramFloat(&appcfgWR.offset_c, A_offset_c, name, value);
   paramFloat(&appcfgWR.offset_f, A_offset_f, name, value);

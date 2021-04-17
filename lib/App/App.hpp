@@ -8,8 +8,6 @@
 
 #define LOG0( format ) Serial.printf( "(%lu) " format, millis())
 #define LOG1( format, ... ) Serial.printf( "(%lu) " format, millis(), ##__VA_ARGS__ )
-#define TLOG0( format ) TelnetStream.printf( "(%ld) " format, millis())
-#define TLOG1( format, ... ) TelnetStream.printf( "(%ld) " format, millis(), ##__VA_ARGS__ )
 
 #define APP_NAME "AZ-Envy"
 #define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
@@ -80,6 +78,8 @@ typedef struct appconfig
   bool led_night_mode_enabled;
   int led_night_mode_timeout;  
 #endif
+
+  bool telnet_enabled;
 
 } AppConfig;
 

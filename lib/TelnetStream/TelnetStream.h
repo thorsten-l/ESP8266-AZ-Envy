@@ -64,5 +64,4 @@ extern void tlog( const char *message );
 extern void tlog( String message );
 extern void tlogf( const char *format, ... );
 
-
 #endif

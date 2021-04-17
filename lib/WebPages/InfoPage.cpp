@@ -70,6 +70,8 @@ void handleInfoPage()
              (appcfg.mqtt_enabled) ? "true" : "false");
 //  sendPrintf("<p>Syslog Enabled: %s</p>",
 //             (appcfg.syslog_enabled) ? "true" : "false");
+  sendPrintf("<p>Telnet Enabled: %s</p>",
+             (appcfg.telnet_enabled) ? "true" : "false");
 
   sendPrint("</form>");
   sendFooter();

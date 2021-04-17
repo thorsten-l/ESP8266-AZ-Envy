@@ -136,7 +136,9 @@ static const char *setupProcessor(const char *var)
     return buffer;
   }
 
-
+  // Telnet
+  if (strcmp(var, A_telnet_enabled) == 0 && appcfg.telnet_enabled == true)
+    return checked;
 
 #ifdef WIFI_LED
   if (strcmp(var, A_led_night_mode_enabled) == 0 && appcfg.led_night_mode_enabled == true)

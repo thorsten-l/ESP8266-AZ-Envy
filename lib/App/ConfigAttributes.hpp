@@ -50,4 +50,6 @@
 #define A_led_night_mode_enabled "led_night_mode_enabled"
 #define A_led_night_mode_timeout "led_night_mode_timeout"
 
+#define A_telnet_enabled "telnet_enabled"
+
 #endif

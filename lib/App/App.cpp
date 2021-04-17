@@ -109,6 +109,8 @@ void App::defaultConfig()
   appcfg.led_night_mode_timeout = DEFAULT_LED_NIGHT_MODE_TIMEOUT;
 #endif
 
+  appcfg.telnet_enabled = DEFAULT_TELNET_ENABLED;
+
   memcpy(&appcfgWR, &appcfg, sizeof(appcfg));
   memcpy(&appcfgRD, &appcfg, sizeof(appcfg));
 }
@@ -355,6 +357,8 @@ void App::writeConfig()
     j.writeEntry(A_led_night_mode_timeout, appcfgWR.led_night_mode_timeout);
 #endif
 
+    j.writeEntry(A_telnet_enabled, appcfgWR.telnet_enabled);
+
     j.writeFooter();
     configJson.close();
 
@@ -431,6 +435,10 @@ void App::printConfig(AppConfig ac)
                 (ac.led_night_mode_enabled ? "true" : "false"));
   Serial.printf("    led_night_mode_timeout: %ds\n", ac.led_night_mode_timeout);
 #endif
+
+  Serial.println("\n  Telnet:");
+  Serial.printf("    Enabled: %s\n",
+                (ac.telnet_enabled ? "true" : "false"));
 
   Serial.println("\n  SHT30:");
   Serial.printf("    Temp. C offset: %f\n", ac.offset_c );
@@ -537,6 +545,8 @@ bool App::loadJsonConfig(const char *filename)
       readError |= j.readEntryBoolean(attributeName, A_led_night_mode_enabled, &appcfgRD.led_night_mode_enabled);
       readError |= j.readEntryInteger(attributeName, A_led_night_mode_timeout, &appcfgRD.led_night_mode_timeout);
 #endif
+
+      readError |= j.readEntryBoolean(attributeName, A_telnet_enabled, &appcfgRD.telnet_enabled);
 
       readError |= j.readEntryFloat(attributeName, A_offset_c, &appcfgRD.offset_c);
       readError |= j.readEntryFloat(attributeName, A_offset_f, &appcfgRD.offset_f);

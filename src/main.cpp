@@ -55,20 +55,17 @@ void loop()
 
   if (buttonPressed)
   {
-    LOG0("button pressed\n");
-    TLOG0("button pressed\n");
+    tlog("button pressed\n");
     sensorHandler.calibrate();
     buttonPressed = false;
   }
 
   if ((thisLoopTimestamp - lifeTicker) >= 10000)
   {
-    LOG1("max loop time = %ld\n", maxLoopTime);
     LOG1("wifi is connected %d\n", wifiHandler.isConnected());
-    LOG1("free heap %d\n", ESP.getFreeHeap());
 
-    TLOG1("max loop time = %ld\n", maxLoopTime);
-    TLOG1("free heap %d\n", ESP.getFreeHeap());
+    tlogf("max loop time = %ld\n", maxLoopTime);
+    tlogf("free heap %d\n", ESP.getFreeHeap());
 
     maxLoopTime = 0l;
     lifeTicker = thisLoopTimestamp;

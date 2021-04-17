@@ -105,6 +105,10 @@ const char SETUP_HTML_TEMPLATE[] PROGMEM =
     "<div class=\"pure-control-group\"><label for=\"pgid33\">App Name</label><input id=\"pgid33\" type=\"text\" name=\"syslog_app_name\" maxlength=\"64\" value=\"%syslog_app_name%\"></div>\n"
   "</div>\n"
 */
+  "<div class='accordion'>Telnet</div>\n"
+  "<div class='panel sub-panel'>\n"
+    "<div class=\"pure-control-group\"><label for=\"teid01\">Enabled</label><input id=\"teid01\" type=\"checkbox\" name=\"telnet_enabled\" value=\"true\" %telnet_enabled%></div>\n"
+  "</div>\n"
 
   "</fieldset></div>\n"
   "\n<p><input class=\"pure-button pure-button-primary\" type=\"submit\" value=\"Save Configuration\"></p>\n"
